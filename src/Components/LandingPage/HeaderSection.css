@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+.heading-div{
+    height: 140px;
+    width: 700px;
+    margin: auto;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.heading{
+    font-size: 70px;
+}
+
+.right-job{
+    color: rgb(36, 104, 230);
+}

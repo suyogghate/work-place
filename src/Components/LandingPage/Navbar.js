@@ -14,10 +14,11 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Logo from "../../assets/logo2.png";
 import "./Navbar.css";
+import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-const pages = ["Find a job", "Find a candidate"];
+const pages = [{label:"Find a job", path:'/candidate/auth'},{label:"Find a candidate", path: '/employer/auth'}];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -67,6 +68,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 function NavBar() {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -85,6 +87,10 @@ function NavBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const navigatetopage = (path) => {
+    navigate(path);
+  }
 
   return (
     <AppBar className="container" position="static">
@@ -137,8 +143,8 @@ function NavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page} onClick={()=>navigatetopage(page.path)}>
+                  <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -166,7 +172,7 @@ function NavBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={()=>navigatetopage(page.path)}
                 sx={{
                   my: 2,
                   mx: 2,
@@ -175,7 +181,7 @@ function NavBar() {
                   ":hover": { bgcolor: "rgb(107, 154, 241)", color: "white" },
                 }}
               >
-                {page}
+                {page.label}
               </Button>
             ))}
           </Box>
