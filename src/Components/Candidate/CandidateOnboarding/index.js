@@ -13,6 +13,9 @@ import {
   Chip
 } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
+import { db } from "../../../firebaseConfig";
+import { setDoc, doc} from "firebase/firestore"; 
+import { useNavigate } from "react-router-dom";
 
 const domain = [
   "Frontend",
@@ -66,6 +69,7 @@ function getStyles(name, personName, theme) {
 }
 
 function CandidateOnboarding() {
+  const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("user"));
   const theme = useTheme();
   const [userInfo, setUserInfo] = React.useState({
@@ -79,8 +83,18 @@ function CandidateOnboarding() {
     ctc: "",
   });
 
-  const submitUserInfo = (e) => {
+  const submitUserInfo = async(e) => {
     e.preventDefault();
+    try {
+      await setDoc(doc(db, "userData", `${userData.uid}`), {
+        ...userInfo,
+        type: "candidate",
+      });
+      alert('successfully submitted!');
+      navigate('/candidate/profile'); 
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
     console.log("Submit", userInfo);
   };
 

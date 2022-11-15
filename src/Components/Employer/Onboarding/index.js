@@ -9,6 +9,9 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
+import { db } from "../../../firebaseConfig";
+import { setDoc, doc} from "firebase/firestore"; 
+import { useNavigate } from "react-router-dom";
 
 const industry = [
   "Automotive",
@@ -23,6 +26,7 @@ const industry = [
 ];
 
 function EmployerOnboarding() {
+  const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("user"));
   const [userInfo, setUserInfo] = React.useState({
     name: "",
@@ -35,8 +39,18 @@ function EmployerOnboarding() {
     industry: "",
   });
 
-  const submitUserInfo = (e) => {
+  const submitUserInfo = async(e) => {
     e.preventDefault();
+    try {
+      await setDoc(doc(db, "userData", `${userData.uid}`), {
+        ...userInfo,
+        type: "employer",
+      });
+      alert('successfully submitted!');
+      navigate('/employer/profile');  
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
     console.log("Submit", userInfo);
   };
 
