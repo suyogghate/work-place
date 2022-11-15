@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+.grid-container{
+    width: '100%';
+    height: '703px'; 
+    background-color: 'lightblue';
+    margin-top: '15rem';
+}
+
+.heading{
+    font-weight: 600;
+    text-align: 'center';
+    margin-top: '20rem';
+    font-family: 'Ubuntu', sans-serif;
+}
