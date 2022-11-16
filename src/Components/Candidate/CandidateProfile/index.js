@@ -83,9 +83,9 @@ function CandidateProfile() {
   });
 
   async function fetchUserInfo() {
+    try{
     const docRef = doc(db, "userData", userData.uid);
     const docSnap = await getDoc(docRef);
-
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
       setUserInfo(docSnap.data());
@@ -94,6 +94,9 @@ function CandidateProfile() {
       // doc.data() will be undefined in this case
       console.log("No such document!");
     }
+  } catch (err){
+    console.log(err);
+  }
   }
 
   React.useEffect(() => {
@@ -112,7 +115,7 @@ function CandidateProfile() {
 
   const saveInfo = async() => {
     try {
-      await setDoc(doc(db, "userData", `${userData.uid}`), {
+      await setDoc(doc(db, "userData", userData.uid), {
         ...userInfo,
       }, {merge: true});
       alert('successfully submitted!');
@@ -128,7 +131,7 @@ function CandidateProfile() {
       {
         loading ? <div>Loading...</div> : (
           <form>
-      <h1>Profile</h1>
+      <h1>Candidate Profile</h1>
       <Grid
         container
         spacing={2}
