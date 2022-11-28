@@ -108,6 +108,7 @@ function Jobform({ postAjob, jobData, setJobData }) {
           ...jobData,
           employerId: userInfo.uid,
           createdAt: new Date(),
+          employer_name: userInfo.displayName
         });
       }
       alert("Job Posted Successfully");

@@ -1,15 +1,31 @@
 import React from "react";
-import {
-  collection,
-  query,
-  onSnapshot,
-  setDoc,
-  doc,
-  getDoc,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import { collection, query, where } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
+import CommonTable from "../../common/CommonTable";
+import { doc, deleteDoc, onSnapshot } from "firebase/firestore";
+
+const columnsName = [
+  {
+    title: "Candidate",
+    key: "candidate_name",
+  },
+  {
+    title: "email",
+    key: "candidate_email",
+  },
+  {
+    title: "status",
+    key: "status",
+  },
+  {
+    title: "Job Title",
+    key: "title",
+  },
+  {
+    title: "actions",
+    key: "buttons",
+  },
+];
 
 function Applicants() {
   const userInfo = JSON.parse(localStorage.getItem("user"));
@@ -20,24 +36,41 @@ function Applicants() {
       collection(db, "applications"),
       where("employerId", "==", userInfo.uid)
     );
-    let data = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data());
-      data.push(doc.data());
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      let data = [];
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data());
+      });
+      setAllApplications(data);
+      console.log("Current applications: ", data);
     });
-    console.log(data, "data");
-    setAllApplications(data);
   };
 
   React.useEffect(() => {
     fetchData();
   }, []);
 
+  const handleClick = async (action, row) => {
+    if (action === "accept") {
+      console.log("accept", row);
+    } else {
+      // application should be deleted
+      await deleteDoc(doc(db, "applications", row.applicationId));
+      console.log("reject", row);
+    }
+  };
+
   return (
     <div>
       {allApplications && allApplications.length > 0 ? (
-        <div>data</div>
+        <div>
+          <CommonTable
+            columnName={columnsName}
+            handleClick={handleClick}
+            data={allApplications}
+          />
+        </div>
       ) : allApplications && allApplications.length === 0 ? (
         <div>no data</div>
       ) : (
@@ -47,4 +80,4 @@ function Applicants() {
   );
 }
 
-export default Applicants
+export default Applicants;

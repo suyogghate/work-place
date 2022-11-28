@@ -1,15 +1,34 @@
 import React from "react";
-import {
-  collection,
-  query,
-  onSnapshot,
-  setDoc,
-  doc,
-  getDoc,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
+import CommonTable from "../../common/CommonTable";
+
+const columnsName = [
+  {
+    title: "Company",
+    key: "company_name"
+  },
+  {
+    title: "Job title",
+    key: "title",
+  },
+  {
+    title: "Job location",
+    key: "location",
+  },
+  {
+    title: "status",
+    key: "status",
+  },
+  // {
+  //   title: "Job id",
+  //   key: "jobId"
+  // }
+  // {
+  //   title: "applied on",
+  //   key: "postedAt",
+  // },
+];
 
 function Application() {
   const userInfo = JSON.parse(localStorage.getItem("user"));
@@ -37,7 +56,9 @@ function Application() {
   return (
     <div>
       {allApplications && allApplications.length > 0 ? (
-        <div>data</div>
+        <div>
+          <CommonTable data={allApplications} columnName={columnsName} />
+        </div>
       ) : allApplications && allApplications.length === 0 ? (
         <div>no data</div>
       ) : (

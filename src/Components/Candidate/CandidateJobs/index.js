@@ -77,6 +77,9 @@ function CandidateJob() {
           postedAt: new Date(),
           candidateId: userInfo.uid,
           status: "applied",
+          candidate_name: userInfo.displayName,
+          company_name: job.employer_name,
+          candidate_email: userInfo.email
         });
         alert("Applied successfully!");
       } catch (err) {
@@ -115,14 +118,12 @@ function CandidateJob() {
                   {job.description}
                 </Grid>
                 <Grid item xs={12}>
-                  <label>Skills</label>
-                  {job.skills.map((skill) => {
-                    return (
-                      <div style={{ display: "flex", gap: "10px" }}>
-                        <div>{skill}</div>
-                      </div>
-                    );
-                  })}
+                  <label>Skills : </label>
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    {job.skills.map((skill) => {
+                      return <div>{skill}</div>;
+                    })}
+                  </div>
                 </Grid>
                 <Grid item sx={12}>
                   <Button onClick={() => applyForJob(job)} variant="contained">
