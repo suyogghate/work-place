@@ -17,13 +17,32 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useNavigate } from "react-router-dom";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = [
+  {
+    label: "Profile",
+    key: "profile",
+  },
+  {
+    label: "Jobs",
+    key: "jobs",
+  },
+  {
+    label: "Applicants",
+    key: "applicants",
+  },
+  {
+    label: "Conversation",
+    key: "conversation",
+  },
+];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function EmployerHoc({ children }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -38,6 +57,11 @@ function EmployerHoc({ children }) {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const reRoute = (page) => {
+    handleCloseNavMenu();
+    navigate(`/employer/${page}`);
   };
 
   return (
@@ -99,8 +123,8 @@ function EmployerHoc({ children }) {
                   }}
                 >
                   {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
+                    <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
+                      <Typography textAlign="center">{page.label}</Typography>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -126,13 +150,13 @@ function EmployerHoc({ children }) {
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
-                  <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {page}
-                  </Button>
+                  <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
+                    <Typography
+                      // sx={{
+                      //   color: state.darkMode ? "#fff" : "#000",
+                      // }}
+                     textAlign="center">{page.label}</Typography>
+                  </MenuItem>
                 ))}
               </Box>
 
@@ -203,4 +227,4 @@ function EmployerHoc({ children }) {
   );
 }
 
-export default EmployerHoc
+export default EmployerHoc;

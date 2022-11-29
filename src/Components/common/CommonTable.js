@@ -47,7 +47,12 @@ function CommonTable({
         </TableHead>
         <TableBody>
           {data.map((row, i) => (
-            <StyledTableRow key={i}>
+            <StyledTableRow 
+            sx={{
+              opacity: row.status === "approved" ? "0.5" : "1",
+              pointerEvents: row.status === "approved" ? "none" : "unset"
+            }}
+            key={i}>
               {columnName.map((item) => {
                 if(item.key === 'buttons'){
                   return (<div>

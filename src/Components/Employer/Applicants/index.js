@@ -2,7 +2,8 @@ import React from "react";
 import { collection, query, where } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import CommonTable from "../../common/CommonTable";
-import { doc, deleteDoc, onSnapshot } from "firebase/firestore";
+import { setDoc, doc, deleteDoc, onSnapshot } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 
 const columnsName = [
   {
@@ -30,6 +31,8 @@ const columnsName = [
 function Applicants() {
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const [allApplications, setAllApplications] = React.useState(null);
+  const last_messages_id = uuidv4();
+  const oneToOneMessageId = uuidv4();
 
   const fetchData = async () => {
     const q = query(
@@ -53,8 +56,49 @@ function Applicants() {
 
   const handleClick = async (action, row) => {
     if (action === "accept") {
-      console.log("accept", row);
-    } else {
+      // we need to update the status of the application to approved
+      try {
+        await setDoc(
+          doc(db, "applications", row.applicationId),
+          {
+            status: "approved",
+          },
+          {
+            merge: true,
+          }
+        );
+        alert("Approved successfully!");
+      } catch (err) {
+        console.log(err);
+      }
+      // console.log("accept", row);
+      try {
+        // console.log("row", row);
+        await setDoc(doc(db, "last_messages", last_messages_id), {
+          last_message:
+            `Hello, thankyou for showing interest in our company, we have accepted your application for ${row.title}`,
+          postedAt: new Date(),
+          employerId: row.employerId,
+          candidateId: row.candidateId,
+          jobId: row.jobId,
+          applicationId: row.applicationId,
+          last_message_id: last_messages_id,
+          candidate_name: row.candidate_name,
+          employer_name: row.company_name,
+          conversationId: `${userInfo.uid}-${row.candidateId}`,
+        });
+        await setDoc(doc(db, "one-to-one-messages", oneToOneMessageId), {
+          createdAt: new Date(),
+          conversationId: `${userInfo.uid}-${row.candidateId}`,
+          userId: userInfo.uid,
+          userType: "employer",
+          message:
+          `Hello, thankyou for showing interest in our company, we have accepted your application for ${row.title}`,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    } else if (action === "reject") {
       // application should be deleted
       await deleteDoc(doc(db, "applications", row.applicationId));
       console.log("reject", row);
