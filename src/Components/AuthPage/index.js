@@ -1,15 +1,16 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
-import {useNavigate} from 'react-router-dom';
+import { auth, db } from "../../firebaseConfig";
+import { useNavigate } from "react-router-dom";
+import { getDoc, doc } from "firebase/firestore";
 
 function AuthPage({ type }) {
   const navigate = useNavigate();
   const signIn = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // const credential = GoogleAuthProvider.credentialFromResult(result);
         // const token = credential.accessToken;
@@ -17,26 +18,36 @@ function AuthPage({ type }) {
         const user = result.user;
         console.log(user);
         localStorage.setItem("user", JSON.stringify(user));
-        if(type === 'candidate'){
-          // navigate to candidate
-          if(!true){   // data
-            // navigate to candidate profile
-            navigate('/candidate/profile');
+
+        const docRef = doc(db, "userData", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const userInfo = docSnap.data();
+          const userType = userInfo.type;
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+          if (type === "candidate") {
+            if(userType === type){
+              navigate("/candidate/profile");
+            } else {
+              alert('You are already onboarded as employer!');
+              return;
+            }
+          } else {
+            if(userType === type){
+              navigate("/employer/profile");
+            } else {
+              alert("You are already onboarded as candidate!");
+              return;
+            }
           }
-          else{
-            // navigate to candidate onboarding
-            navigate('/candidate/onboarding');
-          }
-        }
-        else{
-          // navigate to employer
-          if(!true){    // data
-            // navigate to employer profile
-            navigate('/employer/profile');
-          }
-          else{
-            // navigate to employer onboarding
-            navigate('/employer/onboarding');
+          console.log("Document data: ", docSnap.data());
+        } else {
+          if (type === "candidate") {
+            navigate("/candidate/onboarding");
+          } else {
+            navigate("/employer/onboarding");
           }
         }
       })

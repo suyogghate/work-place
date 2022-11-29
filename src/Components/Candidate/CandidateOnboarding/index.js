@@ -211,7 +211,7 @@ function CandidateOnboarding() {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-        <FormControl sx={{ mx: 0.5, mt: 2.5, width: 700 }}>
+        <FormControl fullWidth>
         <InputLabel id="demo-multiple-chip-label">Skills</InputLabel>
           <Select
             labelId="demo-multiple-chip-label"

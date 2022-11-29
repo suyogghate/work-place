@@ -3,41 +3,45 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import BackupTableIcon from '@mui/icons-material/BackupTable';
+import WorkIcon from '@mui/icons-material/Work';
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
+import {auth} from '../../firebaseConfig';
 
 const pages = [
   {
     label: "Profile",
     key: "profile",
+    icon: <AccountBoxIcon />
   },
   {
     label: "Jobs",
     key: "jobs",
+    icon: <WorkIcon />
   },
   {
     label: "Applicants",
     key: "applicants",
+    icon: <BackupTableIcon />
   },
   {
     label: "Conversation",
     key: "conversation",
+    icon: <QuestionAnswerIcon />
   },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function EmployerHoc({ children }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -47,9 +51,9 @@ function EmployerHoc({ children }) {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  // const handleOpenUserMenu = (event) => {
+  //   setAnchorElUser(event.currentTarget);
+  // };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -63,6 +67,12 @@ function EmployerHoc({ children }) {
     handleCloseNavMenu();
     navigate(`/employer/${page}`);
   };
+
+  const logoutFun = () => {
+    localStorage.clear();
+    auth.signOut();
+    navigate('/');
+  }
 
   return (
     <>
@@ -161,13 +171,19 @@ function EmployerHoc({ children }) {
               </Box>
 
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
-                    />
-                  </IconButton>
+                <Tooltip title="">
+                  <Button 
+                  sx={{
+                    backgroundColor: '#fff',
+                    '&:hover': {
+                      background: "transparent",
+                      color: "#fff",
+                      border: '1px solid #fff'
+                   },
+                  }}
+                  onClick={logoutFun}>
+                    Logout
+                  </Button>
                 </Tooltip>
                 <Menu
                   sx={{ mt: "45px" }}
@@ -185,11 +201,6 @@ function EmployerHoc({ children }) {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
                 </Menu>
               </Box>
             </Toolbar>
@@ -216,9 +227,18 @@ function EmployerHoc({ children }) {
               setValue(newValue);
             }}
           >
-            <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-            <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+            {
+              pages.map((page) => {
+                return (
+                  <BottomNavigationAction 
+                  key={page.key}
+                  label={page.label} 
+                  onClick={() => reRoute(page.key)}
+                  icon={page.icon} 
+                  />
+                )
+              })
+            }
           </BottomNavigation>
         </Box>
       </Box>
