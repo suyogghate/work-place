@@ -1,6 +1,5 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -19,6 +18,8 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import {auth} from '../../firebaseConfig';
+import { DarkmodeContext } from "../context/Darkmode";
+import { Box, Switch } from "@mui/material";
 
 const pages = [
   {
@@ -43,17 +44,21 @@ const pages = [
   },
 ];
 
+
+
 function CandidateHoc({ children }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [state,dispatch] = React.useContext(DarkmodeContext);
+  // const [darkModeOn, toggleDarkMode] = React.useContext(DarkModeContext);
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  // const handleOpenUserMenu = (event) => {
+  //   setAnchorElUser(event.currentTarget);
+  // };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -81,8 +86,12 @@ function CandidateHoc({ children }) {
           display: { xs: "none", md: "block" },
         }}
       >
-        <AppBar position="static">
-          <Container maxWidth="xl">
+        <AppBar position="fixed">
+          <Container 
+          sx={{
+            backgroundColor: state.darkMode ? "#282A3A" : "#fff",
+          }}
+          maxWidth="xl">
             <Toolbar disableGutters>
               <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
               <Typography
@@ -162,22 +171,32 @@ function CandidateHoc({ children }) {
               {pages.map((page) => (
                   <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
                     <Typography
-                      // sx={{
-                      //   color: state.darkMode ? "#fff" : "#000",
-                      // }}
+                      sx={{
+                        color: state.darkMode ? "#fff" : "#000",
+                      }}
                      textAlign="center">{page.label}</Typography>
                   </MenuItem>
                 ))}
               </Box>
 
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="">
+              <Tooltip title={state.darkMode ? 'LightsOff!' : 'LightsOn!'}>
+                  <Switch
+                     checked={state.darkMode}
+                     onChange={() => {
+                       state.darkMode ? dispatch({ type: 'Make_light' }) :
+                       dispatch({ type: "Make_dark" })
+                     }}
+                  />
+                </Tooltip>
+                
+                <Tooltip>
                 <Button 
                   sx={{
                     backgroundColor: '#fff',
                     '&:hover': {
                       background: "transparent",
-                      color: "#fff",
+                      color: state.darkMode ? "#fff" : '#000',
                       border: '1px solid #fff'
                    },
                   }}
@@ -185,6 +204,7 @@ function CandidateHoc({ children }) {
                     Logout
                   </Button>
                 </Tooltip>
+                
                 <Menu
                   sx={{ mt: "45px" }}
                   id="menu-appbar"

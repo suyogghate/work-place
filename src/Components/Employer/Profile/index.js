@@ -11,6 +11,7 @@ import {
 import { db } from "../../../firebaseConfig";
 import { setDoc, doc, getDoc} from "firebase/firestore"; 
 import { useNavigate } from "react-router-dom";
+// import { DarkModeContext } from "../context/Darkmode";
 
 const industry = [
   "Automotive",
@@ -27,6 +28,7 @@ const industry = [
 function EmployerProfile() {
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(true);
+  // const [darkModeOn, toggleDarkMode] = React.useContext(DarkModeContext);
   const [edit, setEdit] = React.useState(false);
   const userData = JSON.parse(localStorage.getItem("user"));
   const [userInfo, setUserInfo] = React.useState({

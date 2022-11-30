@@ -116,9 +116,9 @@ function Applicants() {
           />
         </div>
       ) : allApplications && allApplications.length === 0 ? (
-        <div>no data</div>
+        <div style={{marginTop: '70px'}}>No data</div>
       ) : (
-        <div>Loading...</div>
+        <div style={{marginTop: '70px'}}>Loading...</div>
       )}
     </div>
   );

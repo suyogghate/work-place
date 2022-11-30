@@ -34,9 +34,9 @@ function LastMessage({selectAConversation, allLastMessages}) {
       })}
         </div>
       ) : allLastMessages && allLastMessages.length === 0 ? (
-        <div>No data</div>
+        <div style={{marginTop: '70px'}}>No data</div>
       ) : (
-        <div>Loading...</div>
+        <div style={{marginTop: '70px'}}>Loading...</div>
       )}
     </div>
   );

@@ -22,12 +22,14 @@ import EmployerProfile from "../Components/Employer/Profile";
 import EmployerConversation from "../Components/Employer/Conversation";
 import CandidateHoc from "../Components/HOC/CandidateHoc";
 import EmployerHoc from "../Components/HOC/EmployerHoc";
+import { UserContext } from "../Components/context/UserContext";
 
 function Navs() {
-  const user = JSON.parse(localStorage.getItem('user')) || null;
-  const userInfo = JSON.parse(localStorage.getItem('userInfo')) || null;
+  const [state] = React.useContext(UserContext);
+  // const user = JSON.parse(localStorage.getItem('user')) || null;
+  // const userInfo = JSON.parse(localStorage.getItem('userInfo')) || null;
   const CandidateProtectedRoutes = () => {
-    if (user && userInfo ?. type === 'candidate') {
+    if (state.user && state.userInfo?.type === 'candidate') {
       return <Outlet />;
     } else {
       return <Navigate to="/" />;
@@ -35,7 +37,7 @@ function Navs() {
   };
 
   const EmployerProtectedRoutes = () => {
-    if (user && userInfo ?. type === 'employer') {
+    if (state.user && state.userInfo?.type === 'employer') {
       return <Outlet />;
     } else {
       return <Navigate to="/" />;

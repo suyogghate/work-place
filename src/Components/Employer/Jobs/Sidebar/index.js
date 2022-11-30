@@ -34,8 +34,12 @@ function Sidebar({selectAJob}) {
   }, []);
 
   return (
-    <div>
-      <Button onClick={() => selectAJob()}>+ Post a Job</Button>
+    <div style={{marginTop: '80px'}}>
+      <Button
+      sx={{
+        border: '1px solid blue',
+      }} 
+      onClick={() => selectAJob()}>+ Post a Job</Button>
       {allJobs && allJobs.length > 0 ? (
         <div>
           {" "}
@@ -69,7 +73,9 @@ function Sidebar({selectAJob}) {
       ) : allJobs && allJobs.length === 0 ? (
         <div><h1>No jobs posted</h1></div>
       ) : (
-        <div>Loading...</div>
+        <div
+        style={{marginTop: '70px'}}
+        >Loading...</div>
       )}
     </div>
   );

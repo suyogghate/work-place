@@ -16,9 +16,6 @@ import { v4 as uuidv4 } from "uuid";
 import {
   setDoc,
   doc,
-  addDoc,
-  collection,
-  getFirestore,
 } from "firebase/firestore";
 import { db } from "../../../../firebaseConfig";
 
@@ -263,7 +260,9 @@ function Jobform({ postAjob, jobData, setJobData }) {
     </Grid>
     </form>
   ) : (
-    <div>Please select a job</div>
+    <div
+    style={{marginTop: '75px'}}
+    >Please select a job</div>
   );
 }
 

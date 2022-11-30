@@ -14,6 +14,7 @@ import {
 import React from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
+import { DarkmodeContext } from "../../context/Darkmode";
 
 const domain = [
   "Frontend",
@@ -68,7 +69,9 @@ function getStyles(name, personName, theme) {
 
 function CandidateProfile() {
   const userData = JSON.parse(localStorage.getItem("user"));
+  // const [darkModeOn, toggleDarkMode] = React.useContext(DarkModeContext);
   const [loading, setLoading] = React.useState(true);
+  const [state, dispatch] = React.useContext(DarkmodeContext);
   const theme = useTheme();
   const [edit, setEdit] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState({
@@ -103,7 +106,7 @@ function CandidateProfile() {
     fetchUserInfo();
   }, []);
 
-  const handleSkillChange = (event) => {
+  const handleSkillChange = React.useCallback((event) => {
     const {
       target: { value },
     } = event;
@@ -111,7 +114,7 @@ function CandidateProfile() {
       ...userInfo,
       skills: typeof value === "string" ? value.split(",") : value,
     });
-  };
+  }, [userInfo]);
 
   const saveInfo = async() => {
     try {
@@ -129,9 +132,9 @@ function CandidateProfile() {
   return (
     <div>
       {
-        loading ? <div>Loading...</div> : (
+        loading ? <div style={{marginTop: '70px'}}>Loading...</div> : (
           <form>
-      <h1>Candidate Profile</h1>
+      <h1 style={{marginTop: '70px'}}>Candidate Profile</h1>
       <Grid
         container
         spacing={2}
@@ -139,7 +142,7 @@ function CandidateProfile() {
           padding: "10px",
           maxWidth: "95%",
           margin: "30px auto",
-          backgroundColor: "#e9eff3",
+          backgroundColor: state.darkMode ? "#1e1e1e" : "#fff",
           boxShadow: "0px 0px 30px rgb(0 0 0 / 45%)",
           borderRadius: "8px",
         }}
@@ -244,7 +247,7 @@ function CandidateProfile() {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl sx={{ mx: 0.5, mt: 2.5, width: 700 }}>
+          <FormControl sx={{ mx: 0.5, mt: 2.5, width: 500 }}>
             <InputLabel id="demo-multiple-chip-label">Skills</InputLabel>
             <Select
               disabled={!edit}
@@ -305,4 +308,4 @@ function CandidateProfile() {
   );
 }
 
-export default CandidateProfile;
+export default React.memo(CandidateProfile);

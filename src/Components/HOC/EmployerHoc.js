@@ -1,12 +1,12 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-import BackupTableIcon from '@mui/icons-material/BackupTable';
-import WorkIcon from '@mui/icons-material/Work';
+import { Box, Switch } from "@mui/material";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import BackupTableIcon from "@mui/icons-material/BackupTable";
+import WorkIcon from "@mui/icons-material/Work";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -17,35 +17,42 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { DarkmodeContext } from "../context/Darkmode";
 import { useNavigate } from "react-router-dom";
-import {auth} from '../../firebaseConfig';
+import { auth } from "../../firebaseConfig";
+
 
 const pages = [
   {
     label: "Profile",
     key: "profile",
-    icon: <AccountBoxIcon />
+    icon: <AccountBoxIcon />,
   },
   {
     label: "Jobs",
     key: "jobs",
-    icon: <WorkIcon />
+    icon: <WorkIcon />,
   },
   {
     label: "Applicants",
     key: "applicants",
-    icon: <BackupTableIcon />
+    icon: <BackupTableIcon />,
   },
   {
     label: "Conversation",
     key: "conversation",
-    icon: <QuestionAnswerIcon />
+    icon: <QuestionAnswerIcon />,
   },
 ];
+
+
 
 function EmployerHoc({ children }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [state,dispatch] = React.useContext(DarkmodeContext);
+  // const [darkModeOn, toggleDarkMode] = React.useContext(DarkmodeContext);
+
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const handleOpenNavMenu = (event) => {
@@ -71,8 +78,8 @@ function EmployerHoc({ children }) {
   const logoutFun = () => {
     localStorage.clear();
     auth.signOut();
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   return (
     <>
@@ -81,8 +88,13 @@ function EmployerHoc({ children }) {
           display: { xs: "none", md: "block" },
         }}
       >
-        <AppBar position="static">
-          <Container maxWidth="xl">
+        <AppBar position="fixed">
+          <Container
+            sx={{
+              backgroundColor: state.darkMode ? "#282A3A" : "#fff",
+            }}
+            maxWidth="xl"
+          >
             <Toolbar disableGutters>
               <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
               <Typography
@@ -134,7 +146,14 @@ function EmployerHoc({ children }) {
                 >
                   {pages.map((page) => (
                     <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
-                      <Typography textAlign="center">{page.label}</Typography>
+                      <Typography
+                        sx={{
+                          color: state.darkMode ? "#fff" : "#000",
+                        }}
+                        textAlign="center"
+                      >
+                        {page.label}
+                      </Typography>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -162,26 +181,40 @@ function EmployerHoc({ children }) {
                 {pages.map((page) => (
                   <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
                     <Typography
-                      // sx={{
-                      //   color: state.darkMode ? "#fff" : "#000",
-                      // }}
-                     textAlign="center">{page.label}</Typography>
+                      sx={{
+                        color: state.darkMode ? "#fff" : "#000",
+                      }}
+                      textAlign="center"
+                    >
+                      {page.label}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Box>
 
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="">
-                  <Button 
-                  sx={{
-                    backgroundColor: '#fff',
-                    '&:hover': {
-                      background: "transparent",
-                      color: "#fff",
-                      border: '1px solid #fff'
-                   },
-                  }}
-                  onClick={logoutFun}>
+              <Tooltip title = {state.darkMode ? 'LightsOff!' : 'LightsOn!'}>
+                  <Switch
+                    checked={state.darkMode}
+                    onChange={() => {
+                      state.darkMode ? dispatch({ type: 'Make_light' }) :
+                      dispatch({ type: "Make_dark" })
+                    }}
+                  />
+                </Tooltip>
+                <Tooltip>
+                  <Button
+                    sx={{
+                      backgroundColor: state.darkMode ? "#fff" : "#000",
+                      "&:hover": {
+                        background: "transparent",
+                        color: "#fff",
+                        border: "1px solid #fff",
+                        margin: '10px'
+                      },
+                    }}
+                    onClick={logoutFun}
+                  >
                     Logout
                   </Button>
                 </Tooltip>
@@ -200,12 +233,10 @@ function EmployerHoc({ children }) {
                   }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
-                >
-                </Menu>
+                ></Menu>
               </Box>
             </Toolbar>
           </Container>
-          <div></div>
         </AppBar>
       </Box>
       <Box
@@ -227,18 +258,16 @@ function EmployerHoc({ children }) {
               setValue(newValue);
             }}
           >
-            {
-              pages.map((page) => {
-                return (
-                  <BottomNavigationAction 
+            {pages.map((page) => {
+              return (
+                <BottomNavigationAction
                   key={page.key}
-                  label={page.label} 
+                  label={page.label}
                   onClick={() => reRoute(page.key)}
-                  icon={page.icon} 
-                  />
-                )
-              })
-            }
+                  icon={page.icon}
+                />
+              );
+            })}
           </BottomNavigation>
         </Box>
       </Box>

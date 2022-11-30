@@ -4,8 +4,10 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth, db } from "../../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { getDoc, doc } from "firebase/firestore";
+import { UserContext } from "../context/UserContext";
 
 function AuthPage({ type }) {
+  const [state, dispatch] = React.useContext(UserContext);
   const navigate = useNavigate();
   const signIn = () => {
     const provider = new GoogleAuthProvider();
@@ -17,7 +19,8 @@ function AuthPage({ type }) {
         // // The signed-in user info.
         const user = result.user;
         console.log(user);
-        localStorage.setItem("user", JSON.stringify(user));
+        // localStorage.setItem("user", JSON.stringify(user));
+        dispatch({ type: "SET_USER", payload: user });
 
         const docRef = doc(db, "userData", user.uid);
         const docSnap = await getDoc(docRef);
@@ -25,7 +28,8 @@ function AuthPage({ type }) {
         if (docSnap.exists()) {
           const userInfo = docSnap.data();
           const userType = userInfo.type;
-          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+          // localStorage.setItem('userInfo', JSON.stringify(userInfo));
+          dispatch({ type: "SET_USER_INFO", payload: userInfo })
 
           if (type === "candidate") {
             if(userType === type){

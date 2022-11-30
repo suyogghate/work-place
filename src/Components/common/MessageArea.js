@@ -60,7 +60,7 @@ function MessageArea({ allConversations, postMessage }) {
           </Grid>
         </Grid>
       ) : (
-        <div>Please select a conversation</div>
+        <div style={{marginTop: '70px'}}>Please select a conversation</div>
       )}
     </div>
   );
