@@ -26,7 +26,8 @@ function Jobnews() {
               marginLeft: '2rem',
               background: "#4540DB",
               borderRadius: "20px",
-              color: 'white'
+              color: 'white',
+              ":hover": { bgcolor: "transparent", color: "#4540DB" }
             }}
           >
             Subscribe
