@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .heading-div{
     height: 140px;
     width: 700px;
     margin: auto;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .heading{
@@ -11,5 +11,10 @@
 }
 
 .right-job{
-    color: rgb(36, 104, 230);
+    font-family: 'Roboto', sans-serif;
+    color: #4540DB;
+}
+
+h2{
+    text-shadow: 2px 2px 5px #575757;
 }

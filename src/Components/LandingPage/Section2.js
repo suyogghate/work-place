@@ -61,9 +61,9 @@ function Section2() {
       className="grid-container"
       sx={{
         width: "100%",
-        height: "500px",
+        height: "600px",
         backgroundColor: "lightblue",
-        marginTop: "15rem",
+        marginTop: "20rem",
       }}
     >
       <Typography
@@ -71,12 +71,14 @@ function Section2() {
         variant="h4"
         sx={{
           fontWeight: "600",
-          fontSize: "3rem",
-          fontFamily: "Ubuntu",
-          margin: "3rem 30rem",
+          fontSize: "50px",
+          fontFamily: "Roboto",
+          marginTop: "3rem",
+          marginLeft: '35rem',
+          marginBottom: '-6rem',
         }}
       >
-        Browse Popular category
+        One Platfrom <br/>Many <span className="solution">Solutions</span>
       </Typography>
 
       <Grid
@@ -84,6 +86,7 @@ function Section2() {
         sx={{
           margin: "auto",
           justifyContent: "center",
+          gap: '25px',
         }}
       >
         {cards.map((card, i) => {

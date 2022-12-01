@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .grid-container{
     width: '100%';
@@ -7,9 +7,20 @@
     margin-top: '15rem';
 }
 
-.heading{
+/* .heading{
     font-weight: 600;
     text-align: 'center';
     margin-top: '20rem';
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-size: 70px;
+} */
+
+.right-job{
+    font-size: '70px';
+    font-family: 'Roboto', sans-serif;
+    color: #4540DB;
+}
+
+.solution{
+    color: #4540DB;
 }

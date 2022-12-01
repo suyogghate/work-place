@@ -1,0 +1,42 @@
+.whole-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  height: 180px;
+  width: 1450px;
+  margin-left: 40px;
+  /* background-color: brown; */
+  gap: 15rem;
+}
+
+.footer-navs {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-left: 233px;
+    gap: 20px;
+}
+
+.nav {
+    width: 150px;
+    height: 29px;
+    font-size: 25px;
+}
+
+.nav:hover{
+    cursor: pointer;
+    background-color: '#4540DB';
+}
+
+a{
+    text-decoration: none;
+    color: '#4540DB';
+}
+
+.line-img{
+    margin-bottom: 12px;
+}

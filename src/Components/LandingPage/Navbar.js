@@ -12,14 +12,12 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import Logo from "../../assets/logo2.png";
+import Logo from "../../assets/get-set-job-logo.png";
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { DarkmodeContext } from "../context/Darkmode";
 
-const pages = [{label:"Find a job", path:'/candidate/auth'},{label:"Find a candidate", path: '/employer/auth'}];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
+const pages = [{label: "Home", path:'/'}, {label:"Find jobs", path:'/candidate/auth'},{label:"Find Talent", path: '/employer/auth'}];
 
 function NavBar() {
   const navigate = useNavigate();
@@ -72,7 +70,10 @@ function NavBar() {
               textDecoration: "none",
             }}
           >
-            <img src={Logo} alt="logo" style={{ width: "120px" }} />
+            <img src={Logo} alt="logo" style={{ 
+              width: "100px",
+              borderRadius: "50%", 
+              }} />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -128,10 +129,13 @@ function NavBar() {
               textDecoration: "none",
             }}
           >
-            <img src={Logo} alt="logo" style={{ width: "100px" }} />
+            <img src={Logo} alt="logo" style={{ 
+              width: "100px",
+              borderRadius: "50%", 
+              }} />
           </Typography>
           <Box
-            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, mx: 30 }}
+            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, mx: 48, alignItems: 'center' }}
           >
             {pages.map((page) => (
               <Button
@@ -176,11 +180,6 @@ function NavBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
             </Menu>
           </Box>
         </Toolbar>
