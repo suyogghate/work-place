@@ -3,35 +3,51 @@ import React from "react";
 
 function MessageArea({ allConversations, postMessage }) {
   const [message, setMessage] = React.useState("");
+  const loggedIn_user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <div>
       {allConversations ? (
-        <Grid container>
+        <Grid sx={{ height: "90vh" }} container>
           <Grid
             sx={{
               display: "flex",
-              flexDirection: "column-reverse"
+              flexDirection: "column",
+              height: "90%",
+              overflowY: "scroll",
             }}
             item
             xs={12}
           >
-            {allConversations.map((item) => {
+            {allConversations.reverse().map((item) => {
               return (
                 <div
                   style={{
-                    background: "#F0DBDB",
-                    borderRadius: "0px 16px 16px 16px",
-                    margin: "15px",
-                    padding: "10px",
                     display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-end",
+                    justifyContent:
+                      item.userId === loggedIn_user.uid
+                        ? "flex-end"
+                        : "flex-start",
                   }}
-                  key={item.conversationId}
                 >
-                  <div>{item.message}</div>
-                  <div>{"time"}</div>
+                  <div
+                    style={{
+                      background: "#F0DBDB",
+                      borderRadius: "0px 16px 16px 16px",
+                      margin: "15px",
+                      padding: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems:
+                        item.userId === loggedIn_user.uid
+                          ? "flex-end"
+                          : "flex-start",
+                    }}
+                    key={item.conversationId}
+                  >
+                    <div>{item.message}</div>
+                    <div>{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                  </div>
                 </div>
               );
             })}
@@ -40,9 +56,13 @@ function MessageArea({ allConversations, postMessage }) {
             item
             xs={12}
             sx={{
-              //   position: "fixed",
-              bottom: "100px",
+              position: "sticky",
+              // bottom: "100px",
               width: "100%",
+              bottom: { xs: "50px", md: "0px" },
+              background: "#ffff",
+              padding: "10px",
+              borderRadius: " 12px 13px 0px 0px",
             }}
           >
             <Grid container>
@@ -60,7 +80,9 @@ function MessageArea({ allConversations, postMessage }) {
           </Grid>
         </Grid>
       ) : (
-        <div style={{marginTop: '70px'}}>Please select a conversation</div>
+        <div style={{ marginTop: "80px" }}>
+          <h3>Please select a conversation</h3>
+        </div>
       )}
     </div>
   );

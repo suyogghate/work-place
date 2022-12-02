@@ -38,12 +38,12 @@ function Conversation() {
     try{
     await setDoc(doc(db, 'last_messages', selectConversation.last_message_id),{
       last_message: message,
-      postedAt: new Date(),
+      postedAt: `${new Date().toLocaleTimeString()}`,
     },{
       merge: true
     })
     await setDoc(doc(db, 'one-to-one-messages', oneToOneMessageId),{
-      postedAt: new Date(),
+      postedAt: `${new Date().toLocaleTimeString()}`,
       conversationId: conversationId,
       userId:userInfo.uid,
       userType:'employer',

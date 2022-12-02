@@ -11,11 +11,11 @@ const columnsName = [
     key: "candidate_name",
   },
   {
-    title: "email",
+    title: "Email",
     key: "candidate_email",
   },
   {
-    title: "status",
+    title: "Status",
     key: "status",
   },
   {
@@ -23,7 +23,7 @@ const columnsName = [
     key: "title",
   },
   {
-    title: "actions",
+    title: "Actions",
     key: "buttons",
   },
 ];
@@ -116,9 +116,9 @@ function Applicants() {
           />
         </div>
       ) : allApplications && allApplications.length === 0 ? (
-        <div style={{marginTop: '70px'}}>No data</div>
+        <div style={{marginTop: '70px'}}><h3>No data</h3></div>
       ) : (
-        <div style={{marginTop: '70px'}}>Loading...</div>
+        <div style={{marginTop: '70px'}}><h3>Loading...</h3></div>
       )}
     </div>
   );

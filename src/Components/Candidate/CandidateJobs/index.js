@@ -97,29 +97,31 @@ function CandidateJob() {
               <Grid
                 sx={{
                   maxWidth: "600px",
-                  width: "90%",
-                  margin: "auto",
+                  width: "70%",
+                  marginTop: "5rem",
+                  marginLeft: '26rem',
                   padding: "10px",
                   alignItems: "center",
                   display: "flex",
                   flexDirection: "column",
                   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
                   borderRadius: "10px",
+                  gap: '2px',
                 }}
                 container
               >
                 <Grid item xs={12}>
-                  {job.title}
+                  Job title: {job.title}
                 </Grid>
                 <Grid item xs={12}>
-                  {job.location}
+                  Location: {job.location}
                 </Grid>
                 <Grid item xs={12}>
-                  {job.description}
+                  Description: {job.description}
                 </Grid>
                 <Grid item xs={12}>
                   <label>Skills : </label>
-                  <div style={{ display: "flex", gap: "10px" }}>
+                  <div style={{ display: "flex", gap: "10px", flexDirection: 'row' }}>
                     {job.skills.map((skill) => {
                       return <div>{skill}</div>;
                     })}
@@ -135,9 +137,9 @@ function CandidateJob() {
           })}
         </div>
       ) : allJobs && allJobs.length === 0 ? (
-        <div>No data</div>
+        <div style={{marginTop: '6rem'}}><h3>No data</h3></div>
       ) : (
-        <div>Loading...</div>
+        <div style={{marginTop: '6rem'}}><h3>Loading...</h3></div>
       )}
     </div>
   );

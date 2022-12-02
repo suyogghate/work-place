@@ -17,10 +17,10 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import logo from "../../assets/get-set-job-logo.png";
 import { DarkmodeContext } from "../context/Darkmode";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebaseConfig";
-
 
 const pages = [
   {
@@ -45,12 +45,10 @@ const pages = [
   },
 ];
 
-
-
 function EmployerHoc({ children }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [state,dispatch] = React.useContext(DarkmodeContext);
+  const [state, dispatch] = React.useContext(DarkmodeContext);
   // const [darkModeOn, toggleDarkMode] = React.useContext(DarkmodeContext);
 
   const navigate = useNavigate();
@@ -112,7 +110,14 @@ function EmployerHoc({ children }) {
                   textDecoration: "none",
                 }}
               >
-                LOGO
+                <img
+                  style={{
+                    width: "100px",
+                    borderRadius: "50%",
+                  }}
+                  src={logo}
+                  alt="logo"
+                />
               </Typography>
 
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -149,6 +154,13 @@ function EmployerHoc({ children }) {
                       <Typography
                         sx={{
                           color: state.darkMode ? "#fff" : "#000",
+                          variant: "contained",
+                          // display: "block",
+                          ":hover": {
+                            bgcolor: "rgb(107, 154, 241)",
+                            color: "white",
+                            borderRadius: "5px",
+                          },
                         }}
                         textAlign="center"
                       >
@@ -175,7 +187,14 @@ function EmployerHoc({ children }) {
                   textDecoration: "none",
                 }}
               >
-                LOGO
+                <img
+                  style={{
+                    width: "100px",
+                    borderRadius: "50%",
+                  }}
+                  src={logo}
+                  alt="logo"
+                />
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
@@ -183,6 +202,13 @@ function EmployerHoc({ children }) {
                     <Typography
                       sx={{
                         color: state.darkMode ? "#fff" : "#000",
+                        variant: "contained",
+                        // display: "block",
+                        ":hover": {
+                          bgcolor: "rgb(107, 154, 241)",
+                          color: "white",
+                          borderRadius: "5px",
+                        },
                       }}
                       textAlign="center"
                     >
@@ -193,24 +219,25 @@ function EmployerHoc({ children }) {
               </Box>
 
               <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title = {state.darkMode ? 'LightsOff!' : 'LightsOn!'}>
+                <Tooltip title={state.darkMode ? "LightsOff!" : "LightsOn!"}>
                   <Switch
                     checked={state.darkMode}
                     onChange={() => {
-                      state.darkMode ? dispatch({ type: 'Make_light' }) :
-                      dispatch({ type: "Make_dark" })
+                      state.darkMode
+                        ? dispatch({ type: "Make_light" })
+                        : dispatch({ type: "Make_dark" });
                     }}
                   />
                 </Tooltip>
                 <Tooltip>
                   <Button
                     sx={{
-                      backgroundColor: state.darkMode ? "#fff" : "#000",
+                      backgroundColor: state.darkMode ? "transparent" : "#fff",
                       "&:hover": {
-                        background: "transparent",
-                        color: "#fff",
+                        background: "grey",
+                        color: "#000",
                         border: "1px solid #fff",
-                        margin: '10px'
+                        margin: "10px",
                       },
                     }}
                     onClick={logoutFun}

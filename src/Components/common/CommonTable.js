@@ -36,7 +36,7 @@ function CommonTable({
   handleClick
 }) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer sx={{width: '75rem', marginLeft: '10rem', marginTop: '5rem'}} component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -56,8 +56,8 @@ function CommonTable({
               {columnName.map((item) => {
                 if(item.key === 'buttons'){
                   return (<div>
-                    <Button onClick={() => handleClick('accept', row)}>Accept</Button>
-                    <Button onClick={() => handleClick('reject', row)}>Reject</Button>
+                    <Button onClick={() => handleClick('accept', row)} sx={{marginLeft: '-57px',marginTop: '8px',  color: 'green'}}>Accept</Button>
+                    <Button onClick={() => handleClick('reject', row)} sx={{marginTop: '8px',  color: 'red'}}>Reject</Button>
                   </div>)
                 } else {
                   return <StyledTableCell>{row[item.key]}</StyledTableCell>

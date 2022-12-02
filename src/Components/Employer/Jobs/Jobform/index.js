@@ -115,10 +115,10 @@ function Jobform({ postAjob, jobData, setJobData }) {
   };
 
   return postAjob ? (
-    <form onSubmit={(e) => submitJob(e)}>
+    <form style={{width: '50rem', marginLeft: '11rem'}} onSubmit={(e) => submitJob(e)}>
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <h1>Jobform</h1>
+        <h1 style={{marginTop: '75px'}}>Jobform</h1>
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField
@@ -262,7 +262,7 @@ function Jobform({ postAjob, jobData, setJobData }) {
   ) : (
     <div
     style={{marginTop: '75px'}}
-    >Please select a job</div>
+    ><h3>Please select a job</h3></div>
   );
 }
 

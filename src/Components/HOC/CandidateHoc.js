@@ -16,6 +16,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import logo from "../../assets/get-set-job-logo.png";
 import { useNavigate } from "react-router-dom";
 import {auth} from '../../firebaseConfig';
 import { DarkmodeContext } from "../context/Darkmode";
@@ -109,7 +110,14 @@ function CandidateHoc({ children }) {
                   textDecoration: "none",
                 }}
               >
-                LOGO
+                <img
+                  style={{
+                    width: "100px",
+                    borderRadius: "50%",
+                  }}
+                  src={logo}
+                  alt="logo"
+                />
               </Typography>
 
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -165,7 +173,14 @@ function CandidateHoc({ children }) {
                   textDecoration: "none",
                 }}
               >
-                LOGO
+                <img
+                  style={{
+                    width: "100px",
+                    borderRadius: "50%",
+                  }}
+                  src={logo}
+                  alt="logo"
+                />
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
@@ -173,6 +188,9 @@ function CandidateHoc({ children }) {
                     <Typography
                       sx={{
                         color: state.darkMode ? "#fff" : "#000",
+                        variant: 'contained',
+                        // display: "block",
+                        ":hover": { bgcolor: "rgb(107, 154, 241)", color: "white", borderRadius: '5px' }
                       }}
                      textAlign="center">{page.label}</Typography>
                   </MenuItem>
@@ -193,12 +211,13 @@ function CandidateHoc({ children }) {
                 <Tooltip>
                 <Button 
                   sx={{
-                    backgroundColor: '#fff',
-                    '&:hover': {
-                      background: "transparent",
-                      color: state.darkMode ? "#fff" : '#000',
-                      border: '1px solid #fff'
-                   },
+                    backgroundColor: state.darkMode ? "transparent" : "#fff",
+                      "&:hover": {
+                        background: "grey",
+                        color: "#000",
+                        border: "1px solid #fff",
+                        margin: "10px",
+                      },
                   }}
                   onClick={logoutFun}>
                     Logout

@@ -56,13 +56,13 @@ function Application() {
   return (
     <div>
       {allApplications && allApplications.length > 0 ? (
-        <div>
+        <div style={{marginTop: '75px'}}>
           <CommonTable data={allApplications} columnName={columnsName} />
         </div>
       ) : allApplications && allApplications.length === 0 ? (
-        <div>no data</div>
+        <div style={{marginTop: '75px'}}><h3>No data</h3></div>
       ) : (
-        <div>Loading...</div>
+        <div style={{marginTop: '75px'}}><h3>Loading...</h3></div>
       )}
     </div>
   );

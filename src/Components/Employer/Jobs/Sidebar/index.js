@@ -50,21 +50,24 @@ function Sidebar({selectAJob}) {
                 key={job.Job_id}
                 container
                 sx={{
+                  width: '30rem',
                   padding: "10px",
                   margin: "10px",
-                  border: " 2px solid black",
+                  backgroundColor: 'white',
                   borderRadius: "8px",
+                  boxShadow: '0px 0px 25px -10px black',
                   fontSize: "16px",
+                  ':hover': {cursor: 'pointer', border: "1px solid black",},
                 }}
               >
-                <Grid item xs={12}>
-                  {job.title}
+                <Grid item sx={{marginRight: '16rem'}} xs={12}>
+                  Job title: {job.title}
                 </Grid>
-                <Grid item xs={12}>
-                  {job.location}
+                <Grid item sx={{marginRight: '21.5rem'}} xs={12}>
+                  Location: {job.location}
                 </Grid>
-                <Grid item xs={12}>
-                  {job.jobType}
+                <Grid item sx={{marginLeft: '15rem'}} xs={12}>
+                  Type: {job.jobType}
                 </Grid>
               </Grid>
             );
@@ -75,7 +78,7 @@ function Sidebar({selectAJob}) {
       ) : (
         <div
         style={{marginTop: '70px'}}
-        >Loading...</div>
+        ><h3>Loading...</h3></div>
       )}
     </div>
   );

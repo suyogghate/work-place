@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Mono&display=swap");
+.whole-auth-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.auth-container {
+    width: 907px;
+    height: 494px;
+    margin: 100px auto;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px -3px black;
+}
+
+.auth-heading {
+    font-family: "PT Mono", monospace;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 67px;
+    display: flex;
+    margin-left: 10rem;
+    margin-top: 6rem;
+    padding-top: 0px;
+    /* margin-bottom: 20px; */
+    align-items: center;
+    text-align: center;
+}
+
+.sub-heading {
+  /* width: 152px;
+  height: 40px; */
+  /* left: 421px;
+  top: 165px; */
+  font-family: "PT Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 40px;
+  display: flex;
+  margin-left: 24rem;
+  align-items: center;
+  text-align: center;
+}
+
+.btn {
+  width: 319px;
+  height: 63px;
+  /* left: 337px;
+top: 321px; */
+}
+
+.logo{
+    height: 33px;
+    width: 33px;
+    margin-right: 22px;
+    border-radius: 50%;
+}
+
+.girl-image{
+    width: 423px;
+    height: 545px;
+    margin-top: 71px;
+/* backdrop-filter: blur(1px); */
+}

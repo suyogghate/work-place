@@ -91,7 +91,7 @@ function EmployerProfile() {
       {
         loading ? (<div>Loading...</div>) : (
     <form>
-      <h1>Employer Profile</h1>
+      <h1 style={{marginTop: '80px'}}>Employer Profile</h1>
       <Grid
         container
         spacing={2}
@@ -230,7 +230,7 @@ function EmployerProfile() {
       </Grid>
       {edit ? (
             <div>
-              <Button variant="contained" onClick={saveInfo}>Save</Button>
+              <Button variant="contained" onClick={saveInfo} sx={{marginRight: '8px'}}>Save</Button>
               <Button variant="contained" onClick={()=> setEdit(false)}>Cancel</Button>
             </div>
           ) : (

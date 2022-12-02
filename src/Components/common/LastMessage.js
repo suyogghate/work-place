@@ -14,8 +14,13 @@ function LastMessage({selectAConversation, allLastMessages}) {
           onClick={() => selectAConversation(item)}
             sx={{
               padding: "10px",
-              margin: "10px",
+              marginTop: "8rem",
+              marginLeft: '2rem',
+              backgroundColor: 'white',
               textAlign: "left",
+              borderRadius: '6px',
+              boxShadow: '0px 0px 25px -10px black',
+              width: '90%',
             }}
             container
             key={item.last_message_id}
@@ -24,7 +29,7 @@ function LastMessage({selectAConversation, allLastMessages}) {
               {item.candidate_name}
             </Grid>
             <Grid item xs={3}>
-              {item.postedAt.seconds}
+              {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
             </Grid>
             <Grid item xs={12}>
               {item.last_message}
@@ -34,9 +39,9 @@ function LastMessage({selectAConversation, allLastMessages}) {
       })}
         </div>
       ) : allLastMessages && allLastMessages.length === 0 ? (
-        <div style={{marginTop: '70px'}}>No data</div>
+        <div style={{marginTop: '80px'}}><h3>No data</h3></div>
       ) : (
-        <div style={{marginTop: '70px'}}>Loading...</div>
+        <div style={{marginTop: '80px'}}><h3>Loading...</h3></div>
       )}
     </div>
   );
